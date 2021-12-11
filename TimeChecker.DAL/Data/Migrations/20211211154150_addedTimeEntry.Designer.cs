@@ -10,7 +10,7 @@ using TimeChecker.DAL.Data;
 namespace TimeChecker.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211207163430_addedTimeEntry")]
+    [Migration("20211211154150_addedTimeEntry")]
     partial class addedTimeEntry
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
