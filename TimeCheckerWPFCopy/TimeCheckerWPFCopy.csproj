@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TimeChecker.BLL\TimeChecker.BLL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="TimeCheckerWPFCopy">
+      <HintPath>bin\Debug\net5.0-windows\TimeCheckerWPFCopy.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
