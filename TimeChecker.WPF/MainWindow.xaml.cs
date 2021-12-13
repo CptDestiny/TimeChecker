@@ -26,12 +26,7 @@ namespace TimeChecker.WPF
     public partial class MainWindow : Window
     {
 
-        private readonly TextBlock _commentTextBlock = new TextBlock();
-        private readonly TextBox _commentTextBox = new TextBox();
-        private readonly Button _commentSendButton = new Button();
-        private readonly Button _abboardButton = new Button();
-        private readonly StackPanel _commentStackPanel = new StackPanel();
-        private Window CommentWindow = new Window();
+        CommentBox CommentBox = new CommentBox();
 
         public MainWindow()
         {
@@ -117,7 +112,7 @@ namespace TimeChecker.WPF
         private void BreakButtonCommentSave_OnClick(object sender, RoutedEventArgs e)
         {
             var user = "DummyUser";
-            var comment = _commentTextBox.ToString();
+            var comment = CommentBox._commentTextBox.ToString();
             BusinessLogic bl = new BusinessLogic();
             bl.CreateTimeEntry(2, user, comment);
             CheckInButton.IsEnabled = true;
@@ -128,8 +123,8 @@ namespace TimeChecker.WPF
             BreakButton.IsEnabled = true;
             BreakButton.Visibility = Visibility.Hidden;
             BreakTimeWatch.Visibility = Visibility.Hidden;
-            BreakTimeWatchStackPanel.Children.Remove(_commentStackPanel);
-            CommentWindow.Close();
+            CommentBox.CommentWindow.Close();
+            CommentBox.CommentWindow.Content = null;
         }
 
         private void BreakButtonCommentCancel_OnClick(object sender, RoutedEventArgs e)
@@ -140,8 +135,8 @@ namespace TimeChecker.WPF
             TimeWatch.Text = "01:00:00";
 
             BreakButton.IsEnabled = true;
-            BreakTimeWatchStackPanel.Children.Remove(_commentStackPanel);
-            CommentWindow.Close();
+            CommentBox.CommentWindow.Close();
+            CommentBox.CommentWindow = null;
 
         }
 
@@ -164,46 +159,97 @@ namespace TimeChecker.WPF
 
         private void CreateCommentWindow()
         {
-            CommentWindow.Title = "Timeentry Comment";
-            CommentWindow.Height = 200;
-            CommentWindow.Width = 400;
+            //Define Window
+            CommentBox = new CommentBox();
 
-            _commentStackPanel.Background = Brushes.Black;
-            //_commentStackPanel.Orientation = Orientation.Horizontal;
+            CommentBox.CommentWindow.Title = "Timeentry Comment";
+            CommentBox.CommentWindow.Height = 280;
+            CommentBox.CommentWindow.Width = 335;
+
+          
+            //Define new Grid & Col / Row definitions
+            var commentWindowGrid = new Grid();
+            commentWindowGrid.Background = Brushes.Black;
+            //commentWindowGrid.ShowGridLines = true;
+            //Column definition
+            ColumnDefinition commentWindowColDef1 = new ColumnDefinition();
+            commentWindowColDef1.Width = new GridLength(1, GridUnitType.Auto);
+            ColumnDefinition commentWindowColDef2 = new ColumnDefinition();
+            commentWindowColDef2.Width = new GridLength(1, GridUnitType.Auto);
+            RowDefinition commentWindowRowDef1 = new RowDefinition();
+            commentWindowRowDef1.Height = new GridLength(1, GridUnitType.Auto);
+            RowDefinition commentWindowRowDef2 = new RowDefinition();
+            commentWindowRowDef2.Height = new GridLength(1, GridUnitType.Auto);
+            commentWindowGrid.ColumnDefinitions.Add(commentWindowColDef1);
+            commentWindowGrid.ColumnDefinitions.Add(commentWindowColDef2);
+            commentWindowGrid.RowDefinitions.Add(commentWindowRowDef1);
+            commentWindowGrid.RowDefinitions.Add(commentWindowRowDef2);
 
 
-            _commentTextBlock.Height = 50;
-            _commentTextBlock.Width = 200;
-            _commentTextBlock.Foreground = Brushes.White;
-            _commentTextBlock.TextWrapping = TextWrapping.Wrap;
-            _commentTextBlock.Text = "You have the possibility to enter a comment in the textbox below before saving the data";
+            //Define Stack Panel 1
+            StackPanel _commentStackPanel1 = new StackPanel();
+            _commentStackPanel1.HorizontalAlignment = HorizontalAlignment.Stretch;
+            _commentStackPanel1.VerticalAlignment = VerticalAlignment.Top;
+            Grid.SetColumn(_commentStackPanel1, 0);
+            Grid.SetRow(_commentStackPanel1, 0);
+            Grid.SetColumnSpan(_commentStackPanel1, 2);
 
-            _commentTextBox.Height = 50;
-            _commentTextBox.Width = 200;
-            _commentTextBox.TextWrapping = TextWrapping.Wrap;
-            _commentTextBox.Text = "Enter your comment here or leave empty....";
+            //Define Stack Panel 2
+            StackPanel _commentStackPanel2 = new StackPanel();
+            _commentStackPanel2.HorizontalAlignment = HorizontalAlignment.Left;
+            _commentStackPanel2.VerticalAlignment = VerticalAlignment.Top;
+            _commentStackPanel2.Orientation = Orientation.Vertical;
+            Grid.SetColumn(_commentStackPanel2, 0);
+            Grid.SetRow(_commentStackPanel2, 1);
 
-            _commentSendButton.Height = 50;
-            _commentSendButton.Width = 200;
-            _commentSendButton.VerticalAlignment = VerticalAlignment.Bottom;
-            _commentSendButton.Content = "Save and Check Out";
-            _commentSendButton.Click += this.BreakButtonCommentSave_OnClick;
+            //Define Stack Panel 3
+            StackPanel _commentStackPanel3 = new StackPanel();
+            _commentStackPanel3.HorizontalAlignment = HorizontalAlignment.Right;
+            _commentStackPanel3.VerticalAlignment = VerticalAlignment.Top;
+            _commentStackPanel3.Orientation = Orientation.Vertical;
+            Grid.SetColumn(_commentStackPanel3, 1);
+            Grid.SetRow(_commentStackPanel3, 1);
+
+            CommentBox._commentTextBlock.Height = 50;
+            CommentBox._commentTextBlock.Width = 300;
+            CommentBox._commentTextBlock.Margin = new Thickness(10,10,0,5);
+            CommentBox._commentTextBlock.Foreground = Brushes.White;
+            CommentBox._commentTextBlock.TextWrapping = TextWrapping.Wrap;
+            CommentBox._commentTextBlock.Text = "You have the possibility to enter a comment in the textbox below before saving the data:";
+
+            CommentBox._commentTextBox.Height = 100;
+            CommentBox._commentTextBox.Width = 300;
+            CommentBox._commentTextBox.Margin = new Thickness(10,0,0,5);
+            CommentBox._commentTextBox.TextWrapping = TextWrapping.Wrap;
+            CommentBox._commentTextBox.Text = "";
+
+            CommentBox._commentSendButton.Height = 50;
+            CommentBox._commentSendButton.Width = 140;
+            CommentBox._commentSendButton.Margin = new Thickness(10,5,0,0);
+            CommentBox._commentSendButton.Content = "Save and Check Out";
+            CommentBox._commentSendButton.Click += this.BreakButtonCommentSave_OnClick;
 
 
-            _abboardButton.Height = 50;
-            _abboardButton.Width = 200;
-            _abboardButton.VerticalAlignment = VerticalAlignment.Bottom;
-            _abboardButton.Content = "Cancel Checking Out";
-            _abboardButton.Click += this.BreakButtonCommentCancel_OnClick;
+            CommentBox._abboardButton.Height = 50;
+            CommentBox._abboardButton.Width = 140;
+            CommentBox._abboardButton.Margin = new Thickness(0,5,0,0);
+            CommentBox._abboardButton.Content = "Cancel Checking Out";
+            CommentBox._abboardButton.Click += this.BreakButtonCommentCancel_OnClick;
 
-            _commentStackPanel.Children.Add(_commentTextBlock);
-            _commentStackPanel.Children.Add(_commentTextBox);
-            _commentStackPanel.Children.Add(_commentSendButton);
-            _commentStackPanel.Children.Add(_abboardButton);
+            _commentStackPanel1.Children.Add(CommentBox._commentTextBlock);
+            _commentStackPanel1.Children.Add(CommentBox._commentTextBox);
+            _commentStackPanel2.Children.Add(CommentBox._commentSendButton);
+            _commentStackPanel3.Children.Add(CommentBox._abboardButton);
 
-            CommentWindow.Content = _commentStackPanel;
-            CommentWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            CommentWindow.Show();
+            // Add child content to the parent Grid.
+            commentWindowGrid.Children.Add(_commentStackPanel1);
+            commentWindowGrid.Children.Add(_commentStackPanel2);
+            commentWindowGrid.Children.Add(_commentStackPanel3);
+
+            //Add Grid to the Window and show
+            CommentBox.CommentWindow.Content = commentWindowGrid;
+            CommentBox.CommentWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            CommentBox.CommentWindow.Show();
         }
 
     }
