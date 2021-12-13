@@ -23,7 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeChecker.BLL", "TimeChec
 		{9E3D9885-6DF1-4642-96FD-616DC1825ED7} = {9E3D9885-6DF1-4642-96FD-616DC1825ED7}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeChecker.WPF", "TimeChecker.WPF\TimeChecker.WPF.csproj", "{6EA7F3BA-0401-401D-8465-27BAA73B22A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeChecker.WPF", "TimeChecker.WPF\TimeChecker.WPF.csproj", "{6EA7F3BA-0401-401D-8465-27BAA73B22A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFTesting", "WPFTesting\WPFTesting.csproj", "{D0D436B4-DCD9-46F2-BFCB-7CC865B39073}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{6EA7F3BA-0401-401D-8465-27BAA73B22A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6EA7F3BA-0401-401D-8465-27BAA73B22A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6EA7F3BA-0401-401D-8465-27BAA73B22A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0D436B4-DCD9-46F2-BFCB-7CC865B39073}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0D436B4-DCD9-46F2-BFCB-7CC865B39073}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0D436B4-DCD9-46F2-BFCB-7CC865B39073}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0D436B4-DCD9-46F2-BFCB-7CC865B39073}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

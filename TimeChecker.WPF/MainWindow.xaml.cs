@@ -15,8 +15,10 @@ using System.Windows.Shapes;
 using TimeChecker.BLL;
 using System.Configuration;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Windows.Controls.Primitives;
 using System.Windows.Interop;
+using System.Windows.Threading;
 
 namespace TimeChecker.WPF
 {
@@ -26,35 +28,48 @@ namespace TimeChecker.WPF
     public partial class MainWindow : Window
     {
 
-        CommentBox CommentBox = new CommentBox();
+        private CommentBox CommentBox = new CommentBox();
+        private DispatcherTimer dt = new DispatcherTimer();
+        private Stopwatch sw = new Stopwatch();
+        private string currentTime = string.Empty;
 
         public MainWindow()
         {
             InitializeComponent();
             Application.Current.Exit += new ExitEventHandler(ExitApp);
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+            //Initialize DispatcherTimer
+            dt.Tick += new EventHandler(dt_Tick);
+            dt.Interval = new TimeSpan(0, 0, 0, 0);
         }
 
         private void CheckInButton_OnClick(object sender, RoutedEventArgs e)
         {
-            bool result;
-            string user;
+            string user = "DummyUser";
+            //User -> from config file (XML)??. Can't add the System.Configuration.dll reference in 5.0...
+            //string sAttr = ConfigurationManager.AppSettings.Get("User");
+
             BusinessLogic bl = new BusinessLogic();
 
             //Check if user is checkin in or checking out
 
             if (CheckInButton.IsChecked == true)
             {
-                //CreateTimeentryInfo to check in:
-                //User -> from config file (XML)??. Can't add the System.Configuration.dll reference in 5.0...
-                //string sAttr = ConfigurationManager.AppSettings.Get("User");
-                user = "DummyUser";
 
-                //access the BLL and hand over the user and check-type data
+
+
+                /*Create the start timeentry, access the BLL and hand over the user and check-type dat,
+                /change status and start stopwatch,
+                /Then make the break buttons appear
+                */
 
                 try
                 {
+                    
                     bl.CreateTimeEntry(1, user, "");
+                    StopwatchStart();
+                    StatusScreen.Text = "Checked In";
                 }
                 catch (Exception exception)
                 {
@@ -62,15 +77,9 @@ namespace TimeChecker.WPF
                     throw;
                 }
                 
-                //CheckInButton.Content = "Check Out";
-                StatusScreen.Text = "Checked In";
-                //Start timewatch:
-                TimeWatch.Text = "01:00:00";
-                //Make pause options appear:
                 BreakButton.Visibility = Visibility.Visible;
                 BreakTimeWatch.Visibility = Visibility.Visible;
 
-                //
             }
             else
             {
@@ -87,6 +96,7 @@ namespace TimeChecker.WPF
                 {
                     CheckInButton.IsEnabled = false;
                     CreateCommentWindow();
+                    StopwatchStop();
 
                 }
                 catch (Exception exception)
@@ -98,9 +108,7 @@ namespace TimeChecker.WPF
                 //CheckInButton.Content = "Check in";
                 StatusScreen.Text = "About to Check Out";
 
-                //Pause timewatch:
-                TimeWatch.Text = "Freezed";
-
+               
                 //Make pause options disappear:
                 BreakButton.IsEnabled = false;
                 BreakTimeWatch.Visibility = Visibility.Hidden;
@@ -109,16 +117,17 @@ namespace TimeChecker.WPF
             }
         }
 
-        private void BreakButtonCommentSave_OnClick(object sender, RoutedEventArgs e)
+        private void CommentSaveButton_OnClick(object sender, RoutedEventArgs e)
         {
             var user = "DummyUser";
             var comment = CommentBox._commentTextBox.ToString();
             BusinessLogic bl = new BusinessLogic();
             bl.CreateTimeEntry(2, user, comment);
+            StopwatchReset();
             CheckInButton.IsEnabled = true;
             CheckInButton.IsChecked = false;
             StatusScreen.Text = "Checked Out";
-            TimeWatch.Text = "00:00:00";
+           
 
             BreakButton.IsEnabled = true;
             BreakButton.Visibility = Visibility.Hidden;
@@ -127,13 +136,13 @@ namespace TimeChecker.WPF
             CommentBox.CommentWindow.Content = null;
         }
 
-        private void BreakButtonCommentCancel_OnClick(object sender, RoutedEventArgs e)
+        private void CommentCancelButton_OnClick(object sender, RoutedEventArgs e)
         {
+            StopwatchStart();
             CheckInButton.IsEnabled = true;
             CheckInButton.IsChecked = true;
             StatusScreen.Text = "Checked In";
-            TimeWatch.Text = "01:00:00";
-
+            
             BreakButton.IsEnabled = true;
             CommentBox.CommentWindow.Close();
             CommentBox.CommentWindow = null;
@@ -157,6 +166,43 @@ namespace TimeChecker.WPF
             MessageBox.Show("TimeChecker wurde beendet.");
         }
 
+
+        //Stopwatch functions
+        void dt_Tick(object sender, EventArgs e)
+        {
+            if (sw.IsRunning)
+            {
+                TimeSpan ts = sw.Elapsed;
+                currentTime = String.Format("{0:00}:{1:00}:{2:00}",
+                   ts.Hours, ts.Minutes, ts.Seconds);
+                TimeWatch.Text = currentTime;
+            }
+        }
+
+        private void StopwatchStart()
+        {
+            sw.Start();
+            dt.Start();
+        }
+
+        private void StopwatchStop()
+        {
+            if (sw.IsRunning)
+            {
+                sw.Stop();
+            }
+
+            //elapsedtimeitem.Items.Add(currentTime);
+        }
+
+        private void StopwatchReset()
+        {
+            sw.Reset();
+            TimeWatch.Text = "00:00:00";
+        }
+
+
+        //Create CommentWindow Function to create a new Window to enter a Comment. Should only live, when about to check out.
         private void CreateCommentWindow()
         {
             //Define Window
@@ -227,14 +273,14 @@ namespace TimeChecker.WPF
             CommentBox._commentSendButton.Width = 140;
             CommentBox._commentSendButton.Margin = new Thickness(10,5,0,0);
             CommentBox._commentSendButton.Content = "Save and Check Out";
-            CommentBox._commentSendButton.Click += this.BreakButtonCommentSave_OnClick;
+            CommentBox._commentSendButton.Click += this.CommentSaveButton_OnClick;
 
 
             CommentBox._abboardButton.Height = 50;
             CommentBox._abboardButton.Width = 140;
             CommentBox._abboardButton.Margin = new Thickness(0,5,0,0);
             CommentBox._abboardButton.Content = "Cancel Checking Out";
-            CommentBox._abboardButton.Click += this.BreakButtonCommentCancel_OnClick;
+            CommentBox._abboardButton.Click += this.CommentCancelButton_OnClick;
 
             _commentStackPanel1.Children.Add(CommentBox._commentTextBlock);
             _commentStackPanel1.Children.Add(CommentBox._commentTextBox);
