@@ -30,6 +30,7 @@
                 </MenuItem>
                 <MenuItem Header="Tools">
                     <MenuItem Header="Manage users"/>
+                    <MenuItem Header="Manage absences"/>
                     <MenuItem Header="Show recorded times"/>
                     <MenuItem Header="Show database"/>
 
@@ -81,8 +82,7 @@
                                 <Setter Property="Foreground" Value="White"/>
                                 <Setter Property="BorderBrush" Value="DarkGray"/>
                             </Trigger>
-
-                            </Style.Triggers>
+                        </Style.Triggers>
                     </Style>
                 </ToggleButton.Style>
                 <ToggleButton.Resources>
@@ -95,14 +95,53 @@
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="0" Margin ="10, 30,10,10">
-            <ToggleButton x:Name="BreakButton" Visibility="Hidden" IsChecked="False" Content="Pause" FontSize="20" Foreground="White" Width="100" Height="100" Canvas.Left="200" Canvas.Top="300" Background="Blue" BorderThickness="5" BorderBrush="DarkBlue"
+            <ToggleButton x:Name="BreakButton" Visibility="Visible"  IsChecked="False" FontSize="15" Foreground="White" Width="100" Height="100" Canvas.Left="200" Canvas.Top="300" BorderThickness="5" 
                               Click="BreakButton_OnClick">
+                <ToggleButton.Style>
+                    <Style TargetType= "{x:Type ToggleButton}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ToggleButton">
+                                    <Border BorderBrush="{TemplateBinding BorderBrush}" 
+                                            Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center"                  
+                                                      VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Background" Value="DarkBlue"/>
+                                <Setter Property="BorderBrush" Value="Black"/>
+                                <Setter Property="Content" Value="End Break"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter Property="Background" Value="Blue" />
+                                <Setter Property="BorderBrush" Value="DarkBlue"/>
+                                <Setter Property="Content" Value="Start Break"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Cursor" Value="Hand"/>
+                                <Setter Property="Background" Value="DarkGoldenrod"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Setter Property="BorderBrush" Value="Black"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Cursor" Value="Hand"/>
+                                <Setter Property="Background" Value="White"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="BorderBrush" Value="DarkGray"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ToggleButton.Style>
                 <ToggleButton.Resources>
                     <Style TargetType="Border">
-                        <Setter
-                        Property="CornerRadius" Value="2100">
-                        </Setter>
-
+                        <Setter Property="CornerRadius" Value="100"/>
+                        <Setter Property="BorderThickness" Value="5"/>
                     </Style>
                 </ToggleButton.Resources>
             </ToggleButton>

@@ -50,122 +50,178 @@ namespace TimeChecker.WPF
             //User -> from config file (XML)??. Can't add the System.Configuration.dll reference in 5.0...
             //string sAttr = ConfigurationManager.AppSettings.Get("User");
 
+            //We need a BL object to access the BLL
             BusinessLogic bl = new BusinessLogic();
 
-            //Check if user is checkin in or checking out
-
+            //Check if user is checking in or checking out
             if (CheckInButton.IsChecked == true)
             {
-
-
-
-                /*Create the start timeentry, access the BLL and hand over the user and check-type dat,
+                /*Since the User is checking in, we create a start timeentry, access the BLL and hand over the user and check-type data,
                 /change status and start stopwatch,
                 /Then make the break buttons appear
                 */
-
                 try
                 {
-                    
-                    bl.CreateTimeEntry(1, user, "");
-                    StopwatchStart();
+                    var timeentry = bl.CreateTimeEntry(1, user, "");
                     StatusScreen.Text = "Checked In";
+                    StopwatchStart();
+                    BreakButton.Visibility = Visibility.Visible;
+                    BreakTimeWatch.Visibility = Visibility.Visible;
+
+                    string dictSet = "";
+                    foreach (var element in timeentry)
+                    {
+                        dictSet = dictSet + $" {element},";
+                    }
+                    MessageBox.Show(dictSet);
                 }
                 catch (Exception exception)
                 {
                     Console.WriteLine(exception);
                     throw;
                 }
-                
-                BreakButton.Visibility = Visibility.Visible;
-                BreakTimeWatch.Visibility = Visibility.Visible;
-
             }
             else
             {
-                //CreateTimeentryInfo to check in:
-                //User -> from config file (XML)??. Can't add the System.Configuration.dll reference in 5.0...
-                //string sAttr = ConfigurationManager.AppSettings.Get("User");
-                user = "DummyUser";
-
-                //access the BLL and hand over the user and check-type data
-                
-                // Open Textbox to enter comment
-                
+                /*Since the User is checking out, we disable the Checking-button and Break-Button and open a new Window, where the user can specify his/her work
+                /change status and stop stopwatch,
+                /Then make the break buttons disappear again
+                 */
                 try
                 {
                     CheckInButton.IsEnabled = false;
+                    BreakButton.IsEnabled = false;
+                    StatusScreen.Text = "About to Check Out";
                     CreateCommentWindow();
                     StopwatchStop();
-
                 }
                 catch (Exception exception)
                 {
                     Console.WriteLine(exception);
                     throw;
                 }
-
-                //CheckInButton.Content = "Check in";
-                StatusScreen.Text = "About to Check Out";
-
-               
-                //Make pause options disappear:
-                BreakButton.IsEnabled = false;
-                BreakTimeWatch.Visibility = Visibility.Hidden;
-
-
             }
         }
 
         private void CommentSaveButton_OnClick(object sender, RoutedEventArgs e)
         {
-            var user = "DummyUser";
-            var comment = CommentBox._commentTextBox.ToString();
+            /*After filling the user-comment box, we get the Text from the Textbox and access the BLL to handover the dataset
+            /Reset the Stopwatch and change the status now to checked out
+            /Then we enable the Checkin-Button and Break-Button again
+            /Finally we remove the visiblity of the break-themes and close and empty the CommentWindow Object.
+            /TimeChecker has been entirely reset.
+             */
             BusinessLogic bl = new BusinessLogic();
-            bl.CreateTimeEntry(2, user, comment);
-            StopwatchReset();
-            CheckInButton.IsEnabled = true;
-            CheckInButton.IsChecked = false;
+            var user = "DummyUser";
+            var comment = CommentBox._commentTextBox.Text;
+            
+            var timeentry = bl.CreateTimeEntry(2, user, comment);
             StatusScreen.Text = "Checked Out";
-           
-
+            StopwatchReset();
+            
+            CheckInButton.IsEnabled = true;
             BreakButton.IsEnabled = true;
+
             BreakButton.Visibility = Visibility.Hidden;
             BreakTimeWatch.Visibility = Visibility.Hidden;
+            
             CommentBox.CommentWindow.Close();
             CommentBox.CommentWindow.Content = null;
+
+            string dictSet = "";
+            foreach (var element in timeentry)
+            {
+                dictSet = dictSet + $" {element},";
+            }
+            MessageBox.Show(dictSet);
         }
 
         private void CommentCancelButton_OnClick(object sender, RoutedEventArgs e)
         {
+            /* Checking out was cancelled, so we reset back to check in status
+            /Continue the stopwatch and change the status to checked in again
+            /Then we enable the Checkin-Button and Break-Button again and reset the "isChecked" status, otherwise button is "checked out"
+            /Finally we close and empty the CommentWindow Object.
+            /TimeChecker has been reset back to checked in status.
+             */
+
+            StatusScreen.Text = "Checked In";
             StopwatchStart();
             CheckInButton.IsEnabled = true;
             CheckInButton.IsChecked = true;
-            StatusScreen.Text = "Checked In";
-            
             BreakButton.IsEnabled = true;
+
             CommentBox.CommentWindow.Close();
             CommentBox.CommentWindow = null;
 
         }
 
 
-        private void BreakButton_OnClick(object sender, RoutedEventArgs e) 
+        private void BreakButton_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
-        }
-    
+            string user = "DummyUser";
+            //User -> from config file (XML)??. Can't add the System.Configuration.dll reference in 5.0...
+            //string sAttr = ConfigurationManager.AppSettings.Get("User");
 
-        private void SendComment_OnClick(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
+            //We need a BL object to access the BLL
+            BusinessLogic bl = new BusinessLogic();
 
-        private void ExitApp(object sender, ExitEventArgs e)
-        {
-            MessageBox.Show("TimeChecker wurde beendet.");
-        }
+            /*Since the User is pausing the TimeChecker, we create a start Break timeentry, access the BLL and hand over the user and check-type data,
+            /change status, stop the maintime stopwatch, start the break stopwatch and disable the Checkin-button
+            /
+            */
+            if (BreakButton.IsChecked == true)
+            {
+                try
+                {
+                    var timeentry = bl.CreateTimeEntry(3, user, "");
+                    StatusScreen.Text = "Check In paused";
+                    StopwatchStop();
+                    CheckInButton.IsEnabled = false;
 
+                    string dictSet = "";
+                    foreach (var element in timeentry)
+                    {
+                        dictSet = dictSet + $" {element},";
+                    }
+                    MessageBox.Show(dictSet);
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine(exception);
+                    throw;
+                }
+            } 
+            else
+            {
+                /*Since the User is ending the break, we create a end Break timeentry, access the BLL and hand over the user and check-type data,
+                /change status and start stopwatch,
+                /Then make the break buttons disappear again
+                 */
+                try
+                {
+                    var timeentry = bl.CreateTimeEntry(4, user, "");
+                    CheckInButton.IsEnabled = true;
+                    StatusScreen.Text = "Checked In";
+                    StopwatchStart();
+
+                    string dictSet = "";
+                    foreach (var element in timeentry)
+                    {
+                        dictSet = dictSet + $" {element},";
+                    }
+                    MessageBox.Show(dictSet);
+
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine(exception);
+                    throw;
+                }
+                
+            }
+        }
+        
 
         //Stopwatch functions
         void dt_Tick(object sender, EventArgs e)
@@ -174,7 +230,7 @@ namespace TimeChecker.WPF
             {
                 TimeSpan ts = sw.Elapsed;
                 currentTime = String.Format("{0:00}:{1:00}:{2:00}",
-                   ts.Hours, ts.Minutes, ts.Seconds);
+                    ts.Hours, ts.Minutes, ts.Seconds);
                 TimeWatch.Text = currentTime;
             }
         }
@@ -296,6 +352,12 @@ namespace TimeChecker.WPF
             CommentBox.CommentWindow.Content = commentWindowGrid;
             CommentBox.CommentWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             CommentBox.CommentWindow.Show();
+        }
+
+        //Behavior on exiting the app.
+        private void ExitApp(object sender, ExitEventArgs e)
+        {
+            MessageBox.Show("TimeChecker wurde beendet.");
         }
 
     }
