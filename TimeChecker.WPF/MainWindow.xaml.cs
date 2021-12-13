@@ -32,6 +32,7 @@ namespace TimeChecker.WPF
         private DispatcherTimer dt = new DispatcherTimer();
         private Stopwatch sw = new Stopwatch();
         private string currentTime = string.Empty;
+        ElapsedTimeItemList etil = new ElapsedTimeItemList();
 
         public MainWindow()
         {
@@ -247,8 +248,9 @@ namespace TimeChecker.WPF
             {
                 sw.Stop();
             }
+            etil.AddItemToTimeItemList(currentTime);
+            
 
-            //elapsedtimeitem.Items.Add(currentTime);
         }
 
         private void StopwatchReset()

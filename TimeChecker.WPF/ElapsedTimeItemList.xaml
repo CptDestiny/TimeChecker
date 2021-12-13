@@ -11,9 +11,9 @@
     <Grid Background="Black">
         <StackPanel>
             <TextBox x:Name ="ElapesedTimeItemListHeader" Text ="Recorded breaks" TextAlignment="Center"/>
-            <ListBox x:Name="elapsedtimeitem" Height="100" Width="432" HorizontalAlignment="Left" Margin="10"/>
-        <TextBox x:Name ="ElapesedBreaktItemListHeader" Text ="Erfasste Pausen" TextAlignment="Center" />
-        <ListBox x:Name="ElapsedBreakItemList" Height="100" Width="432" HorizontalAlignment="Left" Margin="10"/>
+            <ListBox x:FieldModifier="public" x:Name="ElapsedTimeItem" Height="100" Width="400" HorizontalAlignment="Left" Margin="10"/>
+            <TextBox x:Name ="ElapesedBreaktItemListHeader" Text ="Erfasste Pausen" TextAlignment="Center" />
+            <ListBox x:FieldModifier="public" x:Name="ElapsedBreakItemList" Height="100" Width="400" HorizontalAlignment="Left" Margin="10"/>
 
         </StackPanel>
     </Grid>

@@ -95,7 +95,7 @@
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="0" Margin ="10, 30,10,10">
-            <ToggleButton x:Name="BreakButton" Visibility="Visible"  IsChecked="False" FontSize="15" Foreground="White" Width="100" Height="100" Canvas.Left="200" Canvas.Top="300" BorderThickness="5" 
+            <ToggleButton x:Name="BreakButton" Visibility="Hidden"  IsChecked="False" FontSize="15" Foreground="White" Width="100" Height="100" Canvas.Left="200" Canvas.Top="300" BorderThickness="5" 
                               Click="BreakButton_OnClick">
                 <ToggleButton.Style>
                     <Style TargetType= "{x:Type ToggleButton}">

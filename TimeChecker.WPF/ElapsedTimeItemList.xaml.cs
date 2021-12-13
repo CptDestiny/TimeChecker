@@ -24,5 +24,11 @@ namespace TimeChecker.WPF
         {
             InitializeComponent();
         }
+
+       public void AddItemToTimeItemList(string item)
+       {
+           ElapsedBreakItemList.Items.Add(item);
+       }
+
     }
 }
