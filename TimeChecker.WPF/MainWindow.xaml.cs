@@ -1,24 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using TimeChecker.BLL;
-using System.Configuration;
-using System.Collections.Specialized;
-using System.Diagnostics;
-using System.Windows.Controls.Primitives;
-using System.Windows.Interop;
-using System.Windows.Threading;
 
 namespace TimeChecker.WPF
 {
@@ -26,26 +10,29 @@ namespace TimeChecker.WPF
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {
+    { 
+       
 
-        private CommentBox CommentBox = new CommentBox();
-        private DispatcherTimer dt = new DispatcherTimer();
-        private Stopwatch sw = new Stopwatch();
-        private string currentTime = string.Empty;
-        ElapsedTimeItemList etil = new ElapsedTimeItemList();
+        private CommentBox CommentBox;
+        private TimeWatch MainTimewatch;
+        private TimeWatch BreakTimewatch;
 
         public MainWindow()
         {
             InitializeComponent();
-            Application.Current.Exit += new ExitEventHandler(ExitApp);
-            WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            //Application.Current.Exit += new ExitEventHandler(ExitApp);
+            //WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            MainTimewatch = new TimeWatch();
+            BreakTimewatch = new TimeWatch();
+            CommentBox = new CommentBox();
 
-            //Initialize DispatcherTimer
-            dt.Tick += new EventHandler(dt_Tick);
-            dt.Interval = new TimeSpan(0, 0, 0, 0);
+            //Subscribing the MainTimeWatch and the BreakTimeWatch to the TickEvent delegate
+            MainTimewatch.TickEvent += MainTimewatchTriggered;
+            BreakTimewatch.TickEvent += BreakTimewatchTriggered;
         }
+        
 
-        private void CheckInButton_OnClick(object sender, RoutedEventArgs e)
+       private void CheckInButton_OnClick(object sender, RoutedEventArgs e)
         {
             string user = "DummyUser";
             //User -> from config file (XML)??. Can't add the System.Configuration.dll reference in 5.0...
@@ -65,7 +52,7 @@ namespace TimeChecker.WPF
                 {
                     var timeentry = bl.CreateTimeEntry(1, user, "");
                     StatusScreen.Text = "Checked In";
-                    StopwatchStart();
+                    MainTimewatch.StopwatchStart();
                     BreakButton.Visibility = Visibility.Visible;
                     BreakTimeWatch.Visibility = Visibility.Visible;
 
@@ -94,7 +81,7 @@ namespace TimeChecker.WPF
                     BreakButton.IsEnabled = false;
                     StatusScreen.Text = "About to Check Out";
                     CreateCommentWindow();
-                    StopwatchStop();
+                    MainTimewatch.StopwatchStop();
                 }
                 catch (Exception exception)
                 {
@@ -114,20 +101,22 @@ namespace TimeChecker.WPF
              */
             BusinessLogic bl = new BusinessLogic();
             var user = "DummyUser";
-            var comment = CommentBox._commentTextBox.Text;
-            
+            var comment = CommentBox.commentTextBox.Text;
+
             var timeentry = bl.CreateTimeEntry(2, user, comment);
             StatusScreen.Text = "Checked Out";
-            StopwatchReset();
-            
+            TimeWatch.Text = MainTimewatch.StopwatchReset();
+            BreakTimeWatch.Text = BreakTimewatch.StopwatchReset();
+
+
             CheckInButton.IsEnabled = true;
             BreakButton.IsEnabled = true;
 
             BreakButton.Visibility = Visibility.Hidden;
             BreakTimeWatch.Visibility = Visibility.Hidden;
-            
-            CommentBox.CommentWindow.Close();
-            CommentBox.CommentWindow.Content = null;
+
+            CommentBox.commentWindow.Close();
+            CommentBox.commentWindow.Content = null;
 
             string dictSet = "";
             foreach (var element in timeentry)
@@ -147,13 +136,13 @@ namespace TimeChecker.WPF
              */
 
             StatusScreen.Text = "Checked In";
-            StopwatchStart();
+            MainTimewatch.StopwatchStart();
             CheckInButton.IsEnabled = true;
             CheckInButton.IsChecked = true;
             BreakButton.IsEnabled = true;
 
-            CommentBox.CommentWindow.Close();
-            CommentBox.CommentWindow = null;
+            CommentBox.commentWindow.Close();
+            CommentBox.commentWindow = null;
 
         }
 
@@ -177,7 +166,8 @@ namespace TimeChecker.WPF
                 {
                     var timeentry = bl.CreateTimeEntry(3, user, "");
                     StatusScreen.Text = "Check In paused";
-                    StopwatchStop();
+                    MainTimewatch.StopwatchStop();
+                    BreakTimewatch.StopwatchStart();
                     CheckInButton.IsEnabled = false;
 
                     string dictSet = "";
@@ -192,7 +182,7 @@ namespace TimeChecker.WPF
                     Console.WriteLine(exception);
                     throw;
                 }
-            } 
+            }
             else
             {
                 /*Since the User is ending the break, we create a end Break timeentry, access the BLL and hand over the user and check-type data,
@@ -204,7 +194,8 @@ namespace TimeChecker.WPF
                     var timeentry = bl.CreateTimeEntry(4, user, "");
                     CheckInButton.IsEnabled = true;
                     StatusScreen.Text = "Checked In";
-                    StopwatchStart();
+                    MainTimewatch.StopwatchStart();
+                    BreakTimewatch.StopwatchStop();
 
                     string dictSet = "";
                     foreach (var element in timeentry)
@@ -219,46 +210,27 @@ namespace TimeChecker.WPF
                     Console.WriteLine(exception);
                     throw;
                 }
-                
-            }
-        }
-        
 
-        //Stopwatch functions
-        void dt_Tick(object sender, EventArgs e)
-        {
-            if (sw.IsRunning)
-            {
-                TimeSpan ts = sw.Elapsed;
-                currentTime = String.Format("{0:00}:{1:00}:{2:00}",
-                    ts.Hours, ts.Minutes, ts.Seconds);
-                TimeWatch.Text = currentTime;
             }
         }
 
-        private void StopwatchStart()
+        //Access the Timewatch Events to trigger, since its subscribed to the delegate
+        // -> The MainTimeWatch Textbox is to be updated with as a running timewatch in the defined DispatchTimers interval
+        private void MainTimewatchTriggered(object? sender, TickEventArgs e)
         {
-            sw.Start();
-            dt.Start();
+            var CurrentTime = String.Format("{0:00}:{1:00}:{2:00}",
+                e.TimeSpan.Hours, e.TimeSpan.Minutes, e.TimeSpan.Seconds);
+            TimeWatch.Text = CurrentTime;
         }
 
-        private void StopwatchStop()
+        //Access the Timewatch Events to trigger, since its subscribed to the delegate
+        // -> The BreakTimeWatch Textbox is to be updated with as a running timewatch in the defined DispatchTimers interval
+        private void BreakTimewatchTriggered(object? sender, TickEventArgs e)
         {
-            if (sw.IsRunning)
-            {
-                sw.Stop();
-            }
-            etil.AddItemToTimeItemList(currentTime);
-            
-
+            var CurrentTime = String.Format("{0:00}:{1:00}:{2:00}",
+                e.TimeSpan.Hours, e.TimeSpan.Minutes, e.TimeSpan.Seconds);
+            BreakTimeWatch.Text = CurrentTime;
         }
-
-        private void StopwatchReset()
-        {
-            sw.Reset();
-            TimeWatch.Text = "00:00:00";
-        }
-
 
         //Create CommentWindow Function to create a new Window to enter a Comment. Should only live, when about to check out.
         private void CreateCommentWindow()
@@ -266,11 +238,11 @@ namespace TimeChecker.WPF
             //Define Window
             CommentBox = new CommentBox();
 
-            CommentBox.CommentWindow.Title = "Timeentry Comment";
-            CommentBox.CommentWindow.Height = 280;
-            CommentBox.CommentWindow.Width = 335;
+            CommentBox.commentWindow.Title = "Timeentry Comment";
+            CommentBox.commentWindow.Height = 280;
+            CommentBox.commentWindow.Width = 335;
 
-          
+
             //Define new Grid & Col / Row definitions
             var commentWindowGrid = new Grid();
             commentWindowGrid.Background = Brushes.Black;
@@ -314,36 +286,36 @@ namespace TimeChecker.WPF
             Grid.SetColumn(_commentStackPanel3, 1);
             Grid.SetRow(_commentStackPanel3, 1);
 
-            CommentBox._commentTextBlock.Height = 50;
-            CommentBox._commentTextBlock.Width = 300;
-            CommentBox._commentTextBlock.Margin = new Thickness(10,10,0,5);
-            CommentBox._commentTextBlock.Foreground = Brushes.White;
-            CommentBox._commentTextBlock.TextWrapping = TextWrapping.Wrap;
-            CommentBox._commentTextBlock.Text = "You have the possibility to enter a comment in the textbox below before saving the data:";
+            CommentBox.commentTextBlock.Height = 50;
+            CommentBox.commentTextBlock.Width = 300;
+            CommentBox.commentTextBlock.Margin = new Thickness(10, 10, 0, 5);
+            CommentBox.commentTextBlock.Foreground = Brushes.White;
+            CommentBox.commentTextBlock.TextWrapping = TextWrapping.Wrap;
+            CommentBox.commentTextBlock.Text = "You have the possibility to enter a comment in the textbox below before saving the data:";
 
-            CommentBox._commentTextBox.Height = 100;
-            CommentBox._commentTextBox.Width = 300;
-            CommentBox._commentTextBox.Margin = new Thickness(10,0,0,5);
-            CommentBox._commentTextBox.TextWrapping = TextWrapping.Wrap;
-            CommentBox._commentTextBox.Text = "";
+            CommentBox.commentTextBox.Height = 100;
+            CommentBox.commentTextBox.Width = 300;
+            CommentBox.commentTextBox.Margin = new Thickness(10, 0, 0, 5);
+            CommentBox.commentTextBox.TextWrapping = TextWrapping.Wrap;
+            CommentBox.commentTextBox.Text = "";
 
-            CommentBox._commentSendButton.Height = 50;
-            CommentBox._commentSendButton.Width = 140;
-            CommentBox._commentSendButton.Margin = new Thickness(10,5,0,0);
-            CommentBox._commentSendButton.Content = "Save and Check Out";
-            CommentBox._commentSendButton.Click += this.CommentSaveButton_OnClick;
+            CommentBox.commentSendButton.Height = 50;
+            CommentBox.commentSendButton.Width = 140;
+            CommentBox.commentSendButton.Margin = new Thickness(10, 5, 0, 0);
+            CommentBox.commentSendButton.Content = "Save and Check Out";
+            CommentBox.commentSendButton.Click += this.CommentSaveButton_OnClick;
 
 
-            CommentBox._abboardButton.Height = 50;
-            CommentBox._abboardButton.Width = 140;
-            CommentBox._abboardButton.Margin = new Thickness(0,5,0,0);
-            CommentBox._abboardButton.Content = "Cancel Checking Out";
-            CommentBox._abboardButton.Click += this.CommentCancelButton_OnClick;
+            CommentBox.abboardButton.Height = 50;
+            CommentBox.abboardButton.Width = 140;
+            CommentBox.abboardButton.Margin = new Thickness(0, 5, 0, 0);
+            CommentBox.abboardButton.Content = "Cancel Checking Out";
+            CommentBox.abboardButton.Click += this.CommentCancelButton_OnClick;
 
-            _commentStackPanel1.Children.Add(CommentBox._commentTextBlock);
-            _commentStackPanel1.Children.Add(CommentBox._commentTextBox);
-            _commentStackPanel2.Children.Add(CommentBox._commentSendButton);
-            _commentStackPanel3.Children.Add(CommentBox._abboardButton);
+            _commentStackPanel1.Children.Add(CommentBox.commentTextBlock);
+            _commentStackPanel1.Children.Add(CommentBox.commentTextBox);
+            _commentStackPanel2.Children.Add(CommentBox.commentSendButton);
+            _commentStackPanel3.Children.Add(CommentBox.abboardButton);
 
             // Add child content to the parent Grid.
             commentWindowGrid.Children.Add(_commentStackPanel1);
@@ -351,9 +323,9 @@ namespace TimeChecker.WPF
             commentWindowGrid.Children.Add(_commentStackPanel3);
 
             //Add Grid to the Window and show
-            CommentBox.CommentWindow.Content = commentWindowGrid;
-            CommentBox.CommentWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            CommentBox.CommentWindow.Show();
+            CommentBox.commentWindow.Content = commentWindowGrid;
+            CommentBox.commentWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            CommentBox.commentWindow.Show();
         }
 
         //Behavior on exiting the app.

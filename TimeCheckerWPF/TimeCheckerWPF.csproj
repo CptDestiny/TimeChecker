@@ -127,5 +127,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TimeChecker.DAL\TimeChecker.DAL.csproj">
+      <Project>{9e3d9885-6df1-4642-96fd-616dc1825ed7}</Project>
+      <Name>TimeChecker.DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

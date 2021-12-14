@@ -23,5 +23,9 @@ namespace TimeChecker.WPF
         {
             InitializeComponent();
         }
+
+
+
+
     }
 }
