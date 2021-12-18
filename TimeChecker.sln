@@ -3,12 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31911.196
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeChecker", "TimeChecker\TimeChecker.csproj", "{3674DDD6-250E-41CC-95F0-63E637DAA605}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeChecker.DAL", "TimeChecker.DAL\TimeChecker.DAL.csproj", "{9E3D9885-6DF1-4642-96FD-616DC1825ED7}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeCheckerWPF5.0", "TimeCheckerWPF5.0\TimeCheckerWPF5.0.csproj", "{125A001E-550C-4E27-9F42-9217C314839D}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoManager.GUI", "TodoManager2\TodoManager.GUI\TodoManager.GUI.csproj", "{41511753-8136-4176-99C9-128787F2EC0A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoManager.DAL.Tests", "TodoManager2\TodoManager.DAL.Tests\TodoManager.DAL.Tests.csproj", "{C60D56AB-C2C0-4C96-A247-FE502440672A}"
@@ -25,18 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3674DDD6-250E-41CC-95F0-63E637DAA605}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3674DDD6-250E-41CC-95F0-63E637DAA605}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3674DDD6-250E-41CC-95F0-63E637DAA605}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3674DDD6-250E-41CC-95F0-63E637DAA605}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9E3D9885-6DF1-4642-96FD-616DC1825ED7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9E3D9885-6DF1-4642-96FD-616DC1825ED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9E3D9885-6DF1-4642-96FD-616DC1825ED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9E3D9885-6DF1-4642-96FD-616DC1825ED7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{125A001E-550C-4E27-9F42-9217C314839D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{125A001E-550C-4E27-9F42-9217C314839D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{125A001E-550C-4E27-9F42-9217C314839D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{125A001E-550C-4E27-9F42-9217C314839D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{41511753-8136-4176-99C9-128787F2EC0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{41511753-8136-4176-99C9-128787F2EC0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41511753-8136-4176-99C9-128787F2EC0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
