@@ -22,7 +22,7 @@ namespace TodoManager.DAL.Tests
             var record = new TodoItem()
             {
                 Type = 2,
-                Description = "Organize meeting to discuss the project"
+                Comment = "Organize meeting to discuss the project"
 
             };
 
@@ -40,13 +40,13 @@ namespace TodoManager.DAL.Tests
             string title = "Organize meeting - updated";
             string description = "Organize meeting to discuss the goals of the project";
             todoItem.Type = 2;
-            todoItem.Description = description;
+            todoItem.Comment = description;
 
             _context.SaveChanges();
 
             var updatedTodoItem = _context.TodoItems.Single(x => x.Id == _todoItemId);
             Assert.AreEqual("Organize meeting - updated", updatedTodoItem.Type);
-            Assert.AreEqual("Organize meeting to discuss the goals of the project", updatedTodoItem.Description);
+            Assert.AreEqual("Organize meeting to discuss the goals of the project", updatedTodoItem.Comment);
         }
 
         [TearDown]

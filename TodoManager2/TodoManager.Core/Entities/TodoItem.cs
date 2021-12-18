@@ -17,7 +17,7 @@ namespace TodoManager.BL.Entities
 
         [Required]
         [MaxLength(255)]
-        public string Description { get; set; }
+        public string Comment { get; set; }
 
         [Required]
         public bool Completed { get; set; }

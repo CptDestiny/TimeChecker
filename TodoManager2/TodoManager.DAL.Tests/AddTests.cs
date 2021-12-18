@@ -24,7 +24,7 @@ namespace TodoManager.DAL.Tests
             var record = new TodoItem()
             {
                 Type = 2,
-                Description = "Organize meeting to discuss the project"
+                Comment = "Organize meeting to discuss the project"
             };
 
             _context.TodoItems.Add(record);
@@ -35,7 +35,7 @@ namespace TodoManager.DAL.Tests
 
             Assert.Greater(addedTodoItem.Id, 0);
             Assert.AreEqual(record.Type, addedTodoItem.Type);
-            Assert.AreEqual(record.Description, addedTodoItem.Description);
+            Assert.AreEqual(record.Comment, addedTodoItem.Comment);
             Assert.AreEqual(record.Completed, addedTodoItem.Completed);
         }
 

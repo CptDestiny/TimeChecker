@@ -10,7 +10,7 @@ using TodoManager.DAL;
 namespace TodoManager.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20211218100805_Jose")]
+    [Migration("20211218165638_Jose")]
     partial class Jose
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -225,15 +225,15 @@ namespace TodoManager.DAL.Migrations
                         .HasColumnName("TodoItemId")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
                     b.Property<bool>("Completed")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
 
                     b.Property<short>("Type")
                         .HasMaxLength(100)
@@ -247,8 +247,8 @@ namespace TodoManager.DAL.Migrations
                         new
                         {
                             Id = -1,
+                            Comment = "I have to do xyz",
                             Completed = false,
-                            Description = "I have to do xyz",
                             Type = (short)2
                         });
                 });

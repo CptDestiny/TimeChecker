@@ -21,7 +21,7 @@ namespace TodoManager.DAL.Tests
             var record = new TodoItem()
             {
                 Type = 2,
-                Description = "Organize meeting to discuss the project"
+                Comment = "Organize meeting to discuss the project"
             };
 
             _context.TodoItems.Add(record);

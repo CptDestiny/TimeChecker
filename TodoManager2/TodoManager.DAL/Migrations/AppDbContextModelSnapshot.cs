@@ -223,15 +223,15 @@ namespace TodoManager.DAL.Migrations
                         .HasColumnName("TodoItemId")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
                     b.Property<bool>("Completed")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
 
                     b.Property<short>("Type")
                         .HasMaxLength(100)
@@ -245,8 +245,8 @@ namespace TodoManager.DAL.Migrations
                         new
                         {
                             Id = -1,
+                            Comment = "I have to do xyz",
                             Completed = false,
-                            Description = "I have to do xyz",
                             Type = (short)2
                         });
                 });

@@ -35,7 +35,7 @@ namespace TodoManager.DAL
 
             modelBuilder.Entity<TodoItem>().HasData(new List<TodoItem>()
             {
-                new() {Id = -1, Type = 2, Description = "I have to do xyz", Completed = false}
+                new() {Id = -1, Type = 2, Comment = "I have to do xyz", Completed = false}
             });
 
             base.OnModelCreating(modelBuilder);

@@ -14,7 +14,7 @@
                                     Header="TodoItem Id" Width="SizeToHeader" IsReadOnly="True"/>
                 <DataGridTextColumn Binding="{Binding Type}" Header="Title"
                                     Width="200"/>
-                <DataGridTextColumn Binding="{Binding Description}" Header="Description"
+                <DataGridTextColumn Binding="{Binding Comment}" Header="Description"
                                     Width="*"/>
                 <DataGridTextColumn Binding="{Binding Completed}" Header="Completed"
                                     Width="SizeToHeader"/>
