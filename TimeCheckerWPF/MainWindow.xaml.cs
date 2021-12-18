@@ -26,8 +26,10 @@ namespace TimeCheckerWPF
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
+
             InitializeComponent();
         }
 
@@ -48,6 +50,10 @@ namespace TimeCheckerWPF
         {
             Main.Content = new Home();
         }
+    }
+
+    internal class ApplicationDbContext
+    {
     }
 }
 

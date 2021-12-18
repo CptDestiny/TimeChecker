@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using TimeChecker.DAL.Models;
 
@@ -15,11 +16,12 @@ namespace TimeChecker.DAL.Data
         public DbSet<Timeentry> Timeentry { get; set; }
 
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-
-
         }
+
+
+
+
     }
 }
