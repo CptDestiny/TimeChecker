@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TimeChecker.DAL\TimeChecker.DAL.csproj" />
+    <ProjectReference Include="..\TimeChecker\TimeChecker.csproj" />
   </ItemGroup>
 
 </Project>

@@ -21,19 +21,27 @@ namespace TimeCheckerWPF5._0
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _contextt;
 
-        public MainWindow(ApplicationDbContext context)
+        public MainWindow()
         {
-            _context = context;
+
             InitializeComponent();
-            GetTodoItems();
+            //GetTodoItems();
         }
 
-        private void GetTodoItems()
+        private void TodoItemGrid_Loaded(object sender, RoutedEventArgs e)
         {
-            var todoItems = _context.Timeentry.ToList();
-            TodoItemGrid.ItemsSource = todoItems;
+            var d = new Class2(_contextt);
+            d.GetTodoItems();
         }
+
+        //private void GetTodoItems()
+        //{
+        //    var todoItems = _context.Timeentry.ToList();
+        //    TodoItemGrid.ItemsSource = todoItems;
+        //}
+
+
     }
 }
