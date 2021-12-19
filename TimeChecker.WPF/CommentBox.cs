@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using TimeChecker.BLL;
 
 namespace TimeChecker.WPF
 {
@@ -22,17 +23,16 @@ namespace TimeChecker.WPF
             commentSendButton = new Button();
             abboardButton = new Button();
             commentWindow = new Window();
-            
         }
 
-        private void CreateWindow()
+        public void CreateWindow()
         {
             //Define Window
-            
+
             commentWindow.Title = "Timeentry Comment";
             commentWindow.Height = 280;
             commentWindow.Width = 335;
-            
+
             //Define new Grid & Col / Row definitions
             var commentWindowGrid = new Grid();
             commentWindowGrid.Background = Brushes.Black;
@@ -81,7 +81,8 @@ namespace TimeChecker.WPF
             commentTextBlock.Margin = new Thickness(10, 10, 0, 5);
             commentTextBlock.Foreground = Brushes.White;
             commentTextBlock.TextWrapping = TextWrapping.Wrap;
-            commentTextBlock.Text = "You have the possibility to enter a comment in the textbox below before saving the data:";
+            commentTextBlock.Text =
+                "You have the possibility to enter a comment in the textbox below before saving the data:";
 
             commentTextBox.Height = 100;
             commentTextBox.Width = 300;
@@ -93,14 +94,14 @@ namespace TimeChecker.WPF
             commentSendButton.Width = 140;
             commentSendButton.Margin = new Thickness(10, 5, 0, 0);
             commentSendButton.Content = "Save and Check Out";
-            commentSendButton.Click += this.CommentSaveButton_OnClick;
+            commentSendButton.Click += CommentSaveButton_OnClick;
 
 
             abboardButton.Height = 50;
             abboardButton.Width = 140;
             abboardButton.Margin = new Thickness(0, 5, 0, 0);
             abboardButton.Content = "Cancel Checking Out";
-            abboardButton.Click += this.CommentCancelButton_OnClick;
+            abboardButton.Click += CommentCancelButton_OnClick;
 
             _commentStackPanel1.Children.Add(commentTextBlock);
             _commentStackPanel1.Children.Add(commentTextBox);
@@ -117,5 +118,61 @@ namespace TimeChecker.WPF
             commentWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             commentWindow.Show();
         }
+
+        void CommentSaveButton_OnClick(object sender, RoutedEventArgs e)
+            {
+                /*After filling the user-comment box, we get the Text from the Textbox and access the BLL to handover the dataset
+                /Reset the Stopwatch and change the status now to checked out
+                /Then we enable the Checkin-Button and Break-Button again
+                /Finally we remove the visiblity of the break-themes and close and empty the CommentWindow Object.
+                /TimeChecker has been entirely reset.
+                 */
+                BusinessLogic bl = new BusinessLogic();
+                var user = "DummyUser";
+                var comment = commentTextBox.Text;
+
+                var timeentry = bl.CreateTimeEntry(2, user, comment);
+                ((MainWindow)Application.Current.MainWindow).StatusScreen.Text = "Checked Out";
+                ((MainWindow)Application.Current.MainWindow).TimeWatch.Text = ((MainWindow)Application.Current.MainWindow).MainTimewatch.StopwatchReset();
+                ((MainWindow)Application.Current.MainWindow).BreakTimeWatch.Text = ((MainWindow)Application.Current.MainWindow).BreakTimewatch.StopwatchReset();
+
+
+                ((MainWindow)Application.Current.MainWindow).IsEnabled = true;
+                ((MainWindow)Application.Current.MainWindow).IsEnabled = true;
+
+                ((MainWindow)Application.Current.MainWindow).Visibility = Visibility.Hidden;
+                ((MainWindow)Application.Current.MainWindow).Visibility = Visibility.Hidden;
+
+                commentWindow.Close();
+                commentWindow.Content = null;
+
+                string dictSet = "";
+                foreach (var element in timeentry)
+                {
+                    dictSet = dictSet + $" {element},";
+                }
+                MessageBox.Show(dictSet);
+            }
+
+            void CommentCancelButton_OnClick(object sender, RoutedEventArgs e)
+            {
+                /* Checking out was cancelled, so we reset back to check in status
+                /Continue the stopwatch and change the status to checked in again
+                /Then we enable the Checkin-Button and Break-Button again and reset the "isChecked" status, otherwise button is "checked out"
+                /Finally we close and empty the CommentWindow Object.
+                /TimeChecker has been reset back to checked in status.
+                 */
+
+                ((MainWindow)Application.Current.MainWindow).StatusScreen.Text = "Checked In";
+                ((MainWindow)Application.Current.MainWindow).MainTimewatch.StopwatchStart();
+                ((MainWindow)Application.Current.MainWindow).CheckInButton.IsEnabled = true;
+                ((MainWindow)Application.Current.MainWindow).CheckInButton.IsChecked = true;
+                ((MainWindow)Application.Current.MainWindow).BreakButton.IsEnabled = true;
+
+                commentWindow.Close();
+                //commentWindow = null;
+
+            }
+
+        }
     }
-}

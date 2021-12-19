@@ -8,7 +8,7 @@ using System.Windows.Threading;
 
 namespace TimeChecker.WPF
 {
-    class TimeWatch
+    public class TimeWatch
     {
         //Declare a handler for when the watchtick is triggered to run of type of own arguments (timeSpan)
         internal EventHandler<TickEventArgs> TickEvent;
