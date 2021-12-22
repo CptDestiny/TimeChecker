@@ -3,43 +3,25 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:TimeChecker.WPF.Controls"
         xmlns:local="clr-namespace:TimeChecker.WPF"
         mc:Ignorable="d"
         
-        
-    
-        Title="MainWindow" Height="450" Width="800">
+        Title="TimeChecker GUI" Height="450" Width="525">
 
 
     <Grid Background="Gray">
         <Grid.ColumnDefinitions>
-
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height=".1*"/>
-            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <DockPanel Grid.ColumnSpan="2">
-            <Menu DockPanel.Dock="Top">
-                <MenuItem Header="Menu">
-                    <MenuItem Header="About"/>
-                    <MenuItem Header="Exit"/>
-                </MenuItem>
-                <MenuItem Header="Tools">
-                    <MenuItem Header="Manage users"/>
-                    <MenuItem Header="Manage absences"/>
-                    <MenuItem Header="Show recorded times"/>
-                    <MenuItem Header="Show database"/>
 
-                </MenuItem>
-
-            </Menu>
-            <TextBox AcceptsReturn="True" />
-        </DockPanel>
-
+<controls:NavigationBar Grid.Row="0" Grid.ColumnSpan="2" DataContext="{Binding Navigator}"/>
+        <ContentControl Content="{Binding Navigator.CurrentViewModel}"/>
 
 <StackPanel Grid.Row ="1"  x:Name="CheckinButtonPanel" Margin="10">
             <ToggleButton x:Name="CheckInButton" IsChecked="False" FontSize = "30" Width="200" Height="200" Canvas.Left="147" Canvas.Top="75"

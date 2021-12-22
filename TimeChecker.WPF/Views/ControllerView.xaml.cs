@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using TimeChecker.BLL;
 using TimeChecker.WPF.Services;
 using TimeChecker.WPF.Utility;
 
@@ -99,9 +98,6 @@ namespace TimeChecker.WPF.Views
             string user = "DummyUser";
             //User -> from config file (XML)??. Can't add the System.Configuration.dll reference in 5.0...
             //string sAttr = ConfigurationManager.AppSettings.Get("User");
-
-            //We need a BL object to access the BLL
-            BusinessLogic bl = new BusinessLogic();
 
             /*Since the User is pausing the TimeChecker, we create a start Break timeentry, access the BLL and hand over the user and check-type data,
             /change status, stop the maintime stopwatch, start the break stopwatch and disable the Checkin-button

@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using TimeChecker.BLL;
 using TimeChecker.WPF.Views;
 
 namespace TimeChecker.WPF.Services 

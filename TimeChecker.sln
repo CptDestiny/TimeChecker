@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31911.196
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeChecker", "TimeChecker\TimeChecker.csproj", "{3674DDD6-250E-41CC-95F0-63E637DAA605}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeChecker.DB", "TimeChecker\TimeChecker.DB.csproj", "{3674DDD6-250E-41CC-95F0-63E637DAA605}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeChecker.DAL", "TimeChecker.DAL\TimeChecker.DAL.csproj", "{9E3D9885-6DF1-4642-96FD-616DC1825ED7}"
 EndProject

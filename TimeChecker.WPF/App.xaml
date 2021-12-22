@@ -1,9 +1,15 @@
 ﻿<Application x:Class="TimeChecker.WPF.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:TimeChecker.WPF"
-             StartupUri="Views/ControllerView.xaml">
+             xmlns:local="clr-namespace:TimeChecker.WPF">
     <Application.Resources>
-         
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/Common.xaml"/>
+                </ResourceDictionary.MergedDictionaries>
+            <Color x:Key="ColorPrimary2" />
+        </ResourceDictionary>
+
     </Application.Resources>
 </Application>

@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="TimeChecker.WPF.Controls.NavigationBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TimeChecker.WPF.Controls"
+             xmlns:nav="clr-namespace:TimeChecker.WPF.State.Navigator"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row ="1">
+            <Menu DockPanel.Dock="Bottom" Background="{StaticResource BrushPrimary2}">
+                <MenuItem Header="Menu" Height="25">
+                    <MenuItem Header="About"/>
+                    <MenuItem Header="Exit" />
+                </MenuItem>
+                <MenuItem Header="Tools">
+                    <MenuItem Header="Manage users"/>
+                    <MenuItem Header="Show recorded times" Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewType.ElapsedTimesListing}" />
+                    <MenuItem Header="Manage absences" Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewType.Absences}" />
+                    <MenuItem Header="Database" Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewType.Database}" />
+                </MenuItem>
+            </Menu>
+            <TextBox Height="40" VerticalContentAlignment="Center"  Background="{StaticResource BrushPrimary1}" Text="Time Checker" TextAlignment="Center" FontSize="18" Grid.Row="0"/>
+        </DockPanel>
+       
+    </Grid>
+</UserControl>
