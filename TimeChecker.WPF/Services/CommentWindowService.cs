@@ -1,28 +1,26 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using TimeChecker.BLL;
+using TimeChecker.WPF.Views;
 
-namespace TimeChecker.WPF
+namespace TimeChecker.WPF.Services 
 {
-    public partial class CommentBox
+    public class CommentWindowService : IWindowCreatorService
     {
 
-        internal Window commentWindow;
-        internal TextBlock commentTextBlock;
-        internal TextBox commentTextBox;
-        internal Button commentSendButton;
-        internal Button abboardButton;
+        private Window commentWindow = new Window();
+        private TextBlock commentTextBlock = new TextBlock();
+        private TextBox commentTextBox = new TextBox();
+        private Button commentSendButton = new Button();
+        private Button abboardButton = new Button();
 
 
-        
-        public CommentBox()
+
+        public CommentWindowService()
         {
-            commentTextBlock = new TextBlock();
-            commentTextBox = new TextBox();
-            commentSendButton = new Button();
-            abboardButton = new Button();
-            commentWindow = new Window();
+           CreateWindow();
         }
 
         public void CreateWindow()
@@ -127,31 +125,24 @@ namespace TimeChecker.WPF
                 /Finally we remove the visiblity of the break-themes and close and empty the CommentWindow Object.
                 /TimeChecker has been entirely reset.
                  */
-                BusinessLogic bl = new BusinessLogic();
-                var user = "DummyUser";
-                var comment = commentTextBox.Text;
 
-                var timeentry = bl.CreateTimeEntry(2, user, comment);
-                ((MainWindow)Application.Current.MainWindow).StatusScreen.Text = "Checked Out";
-                ((MainWindow)Application.Current.MainWindow).TimeWatch.Text = ((MainWindow)Application.Current.MainWindow).MainTimewatch.StopwatchReset();
-                ((MainWindow)Application.Current.MainWindow).BreakTimeWatch.Text = ((MainWindow)Application.Current.MainWindow).BreakTimewatch.StopwatchReset();
+                    var user = "DummyUser";
+                    var comment = commentTextBox.Text;
+                    
+                    TimeManagerService timeSet = new TimeManagerService(user, 4, DateTime.Now, comment);
+                    ((MainWindow)Application.Current.MainWindow).StatusScreen.Text = "Checked Out";
+                    ((MainWindow)Application.Current.MainWindow).TimeWatch.Text = ((MainWindow)Application.Current.MainWindow).MainTimewatch.StopwatchReset();
+                    ((MainWindow)Application.Current.MainWindow).BreakTimeWatch.Text = ((MainWindow)Application.Current.MainWindow).BreakTimewatch.StopwatchReset();
 
 
-                ((MainWindow)Application.Current.MainWindow).IsEnabled = true;
-                ((MainWindow)Application.Current.MainWindow).IsEnabled = true;
+                    ((MainWindow)Application.Current.MainWindow).CheckInButton.IsEnabled = true;
+                    ((MainWindow)Application.Current.MainWindow).BreakButton.IsEnabled = true;
 
-                ((MainWindow)Application.Current.MainWindow).Visibility = Visibility.Hidden;
-                ((MainWindow)Application.Current.MainWindow).Visibility = Visibility.Hidden;
+                    ((MainWindow)Application.Current.MainWindow).BreakButton.Visibility = Visibility.Hidden;
+                    ((MainWindow)Application.Current.MainWindow).BreakTimeWatch.Visibility = Visibility.Hidden;
 
-                commentWindow.Close();
-                commentWindow.Content = null;
-
-                string dictSet = "";
-                foreach (var element in timeentry)
-                {
-                    dictSet = dictSet + $" {element},";
-                }
-                MessageBox.Show(dictSet);
+                    commentWindow.Close();
+            
             }
 
             void CommentCancelButton_OnClick(object sender, RoutedEventArgs e)
@@ -168,11 +159,13 @@ namespace TimeChecker.WPF
                 ((MainWindow)Application.Current.MainWindow).CheckInButton.IsEnabled = true;
                 ((MainWindow)Application.Current.MainWindow).CheckInButton.IsChecked = true;
                 ((MainWindow)Application.Current.MainWindow).BreakButton.IsEnabled = true;
+                
 
                 commentWindow.Close();
-                //commentWindow = null;
 
             }
+
+           
 
         }
     }

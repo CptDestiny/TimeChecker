@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace TimeChecker.WPF
+namespace TimeChecker.WPF.Utility
 {
     
     //Data carrier of the Timespans and it must inherit the EventArgs. To be used with the EventHandler

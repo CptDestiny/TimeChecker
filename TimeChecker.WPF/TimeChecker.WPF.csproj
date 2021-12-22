@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TimeChecker.BLL\TimeChecker.BLL.csproj" />
+    <Folder Include="ModelViews\" />
   </ItemGroup>
 
 </Project>
