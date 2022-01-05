@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimeCheckerWPF5._0"
         mc:Ignorable="d"
-        Title="TimeChecker GUI" Height="450" Width="800">
+        Title="TimeChecker GUI" Height="600" Width="800">
 
     <Grid Background="Gray">
         <Grid.ColumnDefinitions>
@@ -126,11 +126,13 @@
         </StackPanel>
 
         <StackPanel Grid.Row ="1"  Grid.Column="1" Margin="10">
-            <TextBox x:Name="StatusScreen" Text="Checked out" Foreground="White" FontSize="20" TextAlignment="Center" VerticalContentAlignment="Center" Background="Black" Width="250" Height="40" Canvas.Left="459" Canvas.Top="38" BorderThickness="5" BorderBrush="Black" Margin= "10">
+            <TextBox x:Name="StatusScreen" Text="Checked out" IsReadOnly="True" Foreground="White" FontSize="20" TextAlignment="Center" VerticalContentAlignment="Center" Background="Black" Width="250" Height="40" Canvas.Left="459" Canvas.Top="38" BorderThickness="5" BorderBrush="Black" Margin= "10">
             </TextBox>
+            <TextBlock x:Name="TimeWatch" Text="00:00:00" Foreground="White" FontSize="50" TextAlignment="Center" Background="Black" Width="250" Height="120"/>
 
-            <TextBlock x:Name="TimeWatch" Text="00:00:00" Foreground="White" FontSize="50" TextAlignment="Center" Background="Black" Width="250" Height="120" Canvas.Left="459" Canvas.Top="100" Margin= "10">
-            </TextBlock>
+            <TextBox x:Name="CommentTitle" Text="Comment:" IsReadOnly="True" Foreground="White" FontSize="20" TextAlignment="Left" VerticalContentAlignment="Center" Background="Black" Width="250" Height="40" Canvas.Left="459" Canvas.Top="38" BorderThickness="5" BorderBrush="Black" Margin= "0 20 0 5">
+            </TextBox>
+            <TextBox x:Name="CommentBoxEntry" Text="" Margin="0 0 0 0" Foreground="Black" FontSize="14" TextAlignment="Center" Background="White" Width="250" Height="80"/>
         </StackPanel>
 
         <StackPanel x:Name="BreakTimeWatchStackPanel" Grid.Row="2" Grid.Column="1" Margin="10,30,10,10">
@@ -138,5 +140,5 @@
             </TextBlock>
         </StackPanel>
     </Grid>
-    
+
 </Window>

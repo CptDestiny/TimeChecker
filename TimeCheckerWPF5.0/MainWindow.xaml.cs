@@ -27,11 +27,11 @@ namespace TimeCheckerWPF5._0
         private ApplicationDbContext _context;
         private const string _loggedInUser = "DummyUser";
         
-        public MainWindow()
+        public MainWindow(ApplicationDbContext context)
         {
-
+            _context = context;
             InitializeComponent();
-            SetUp();
+            //SetUp();
             Application.Current.Exit += new ExitEventHandler(ExitApp);
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             MainTimewatch = new TimeWatch();
@@ -48,21 +48,21 @@ namespace TimeCheckerWPF5._0
         public TimeWatch BreakTimewatch { get; set; }
 
 
-        public void SetUp()
-        {
-            _context = new ApplicationDbContext(new DbContextOptionsBuilder<ApplicationDbContext>()
-               .UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=TimeChecker;Trusted_Connection=True;MultipleActiveResultSets=true")
-               .Options);
-        }
+        //public void SetUp()
+        //{
+        //    _context = new ApplicationDbContext(new DbContextOptionsBuilder<ApplicationDbContext>()
+        //       .UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=TimeChecker;Trusted_Connection=True;MultipleActiveResultSets=true")
+        //       .Options);
+        //}
 
-        private void Insert(short type, string comment, string user)
+        private void Insert(short type, string user)
         {
             
             var record = new Timeentry()
             {
                 Type = type,
                 DateTime = DateTime.Now,
-                Comment = comment,
+                Comment = CommentBoxEntry.Text,
                 User = user,
             };
 
@@ -88,7 +88,7 @@ namespace TimeCheckerWPF5._0
                 */
                 try
                 {
-                    Insert(1, "", _loggedInUser);
+                    Insert(1,_loggedInUser);
                     StatusScreen.Text = "Checked In";
                     MainTimewatch.StopwatchStart();
                     BreakButton.Visibility = Visibility.Visible;
@@ -109,7 +109,7 @@ namespace TimeCheckerWPF5._0
                 try
                 {
                     //catch a comment*
-                    Insert(2, "Check Out Comment to be implemented", _loggedInUser);
+                    Insert(2, _loggedInUser);
                     //CheckInButton.IsEnabled = false;
                     //BreakButton.IsEnabled = false;
                     StatusScreen.Text = "Checked Out";
@@ -141,7 +141,7 @@ namespace TimeCheckerWPF5._0
             {
                 try
                 {
-                    Insert(3, "", _loggedInUser);
+                    Insert(3, _loggedInUser);
                     StatusScreen.Text = "Check In paused";
                     MainTimewatch.StopwatchStop();
                     BreakTimewatch.StopwatchStart();
@@ -161,7 +161,7 @@ namespace TimeCheckerWPF5._0
                  */
                 try
                 {
-                    Insert(4, "", _loggedInUser);
+                    Insert(4, _loggedInUser);
                     CheckInButton.IsEnabled = true;
                     StatusScreen.Text = "Checked In";
                     MainTimewatch.StopwatchStart();
