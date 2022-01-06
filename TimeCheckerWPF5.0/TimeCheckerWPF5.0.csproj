@@ -8,14 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="NewFolder\**" />
-    <Compile Remove="Views\**" />
-    <EmbeddedResource Remove="NewFolder\**" />
-    <EmbeddedResource Remove="Views\**" />
-    <None Remove="NewFolder\**" />
-    <None Remove="Views\**" />
-    <Page Remove="NewFolder\**" />
-    <Page Remove="Views\**" />
+    <Compile Remove="View\**" />
+    <EmbeddedResource Remove="View\**" />
+    <None Remove="View\**" />
+    <Page Remove="View\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,10 +19,18 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\TimeChecker.DAL\TimeChecker.DAL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
+    <Folder Include="Views\" />
   </ItemGroup>
 
 </Project>
