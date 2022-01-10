@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TimeCheckerWPF5._0.Models
+namespace TimeCheckerWPF5_0.Models
 {
     public class ElapsedTimeSpan
     {

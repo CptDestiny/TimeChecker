@@ -6,9 +6,9 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using TimeCheckerWPF5._0.Models;
+using TimeCheckerWPF5_0.Models;
 
-namespace TimeCheckerWPF5._0.ViewModels
+namespace TimeCheckerWPF5_0.ViewModels
 {
     public class ElapsedTimesViewModel : ViewModelBase
     {

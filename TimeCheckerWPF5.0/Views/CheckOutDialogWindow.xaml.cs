@@ -11,9 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using TimeCheckerWPF5._0.ViewModels;
+using TimeCheckerWPF5_0.ViewModels;
 
-namespace TimeCheckerWPF5._0.Views
+namespace TimeCheckerWPF5_0.Views
 {
     /// <summary>
     /// Interaction logic for CheckOutDialogView.xaml

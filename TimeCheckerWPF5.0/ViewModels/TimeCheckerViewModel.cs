@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using TimeChecker.DAL.Data;
 using TimeChecker.DAL.Models;
-using TimeCheckerWPF5._0.Models;
+using TimeCheckerWPF5_0.Models;
 using System.Windows.Input;
-using TimeCheckerWPF5._0.Views;
-using TimeCheckerWPF5._0.Stores;
+using TimeCheckerWPF5_0.Views;
+using TimeCheckerWPF5_0.Stores;
 using Microsoft.EntityFrameworkCore;
 
-namespace TimeCheckerWPF5._0.ViewModels
+namespace TimeCheckerWPF5_0.ViewModels
 {
 
     public class TimeCheckerViewModel : ViewModelBase

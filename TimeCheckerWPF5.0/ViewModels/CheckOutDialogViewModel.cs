@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using TimeCheckerWPF5._0.Models;
+using TimeCheckerWPF5_0.Models;
 
-namespace TimeCheckerWPF5._0.ViewModels
+namespace TimeCheckerWPF5_0.ViewModels
 {
     public class CheckOutDialogViewModel : ViewModelBase
     {

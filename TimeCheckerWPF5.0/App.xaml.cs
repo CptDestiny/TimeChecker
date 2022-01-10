@@ -9,10 +9,10 @@ using System.Windows;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using TimeChecker.DAL.Data;
-using TimeCheckerWPF5._0.Stores;
-using TimeCheckerWPF5._0.ViewModels;
+using TimeCheckerWPF5_0.Stores;
+using TimeCheckerWPF5_0.ViewModels;
 
-namespace TimeCheckerWPF5._0
+namespace TimeCheckerWPF5_0
 {
     /// <summary>
     /// Interaction logic for App.xaml

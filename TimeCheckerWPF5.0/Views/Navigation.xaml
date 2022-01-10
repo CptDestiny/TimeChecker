@@ -1,11 +1,11 @@
-﻿<UserControl x:Class="TimeCheckerWPF5._0.Views.Navigation"
+﻿<UserControl x:Class="TimeCheckerWPF5_0.Views.Navigation"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:TimeCheckerWPF5._0.Views"
-             xmlns:viewmodels="clr-namespace:TimeCheckerWPF5._0.ViewModels"
-             xmlns:navi="clr-namespace:TimeCheckerWPF5._0.Stores"
+             xmlns:local="clr-namespace:TimeCheckerWPF5_0.Views"
+             xmlns:viewmodels="clr-namespace:TimeCheckerWPF5_0.ViewModels"
+             xmlns:navi="clr-namespace:TimeCheckerWPF5_0.Stores"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="100">
     <UserControl.DataContext >

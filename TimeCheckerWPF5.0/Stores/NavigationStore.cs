@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Input;
-using TimeCheckerWPF5._0.ViewModels;
+using TimeCheckerWPF5_0.ViewModels;
 
-namespace TimeCheckerWPF5._0.Stores
+namespace TimeCheckerWPF5_0.Stores
 {
 
     public class NavigationStore

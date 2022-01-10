@@ -8,9 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="NewFolder\**" />
     <Compile Remove="View\**" />
+    <EmbeddedResource Remove="NewFolder\**" />
     <EmbeddedResource Remove="View\**" />
+    <None Remove="NewFolder\**" />
     <None Remove="View\**" />
+    <Page Remove="NewFolder\**" />
     <Page Remove="View\**" />
   </ItemGroup>
 
@@ -29,7 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="NewFolder\" />
     <Folder Include="Views\" />
   </ItemGroup>
 

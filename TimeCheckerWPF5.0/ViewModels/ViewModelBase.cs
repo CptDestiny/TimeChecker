@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TimeCheckerWPF5._0.ViewModels
+namespace TimeCheckerWPF5_0.ViewModels
 {
     public class ViewModelBase : INotifyPropertyChanged
     {

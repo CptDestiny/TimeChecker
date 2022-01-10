@@ -1,7 +1,7 @@
 ﻿using System.Windows.Input;
-using TimeCheckerWPF5._0.Stores;
+using TimeCheckerWPF5_0.Stores;
 
-namespace TimeCheckerWPF5._0.ViewModels
+namespace TimeCheckerWPF5_0.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {

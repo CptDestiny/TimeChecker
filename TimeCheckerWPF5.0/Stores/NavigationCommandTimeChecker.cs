@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TimeCheckerWPF5._0.Models;
-using TimeCheckerWPF5._0.ViewModels;
+using TimeCheckerWPF5_0.Models;
+using TimeCheckerWPF5_0.ViewModels;
 
-namespace TimeCheckerWPF5._0.Stores
+namespace TimeCheckerWPF5_0.Stores
 {
     public class NavigationCommandTimeChecker : CommandBase
     {

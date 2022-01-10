@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeChecker.DAL", "TimeChec
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeChecker.DAL.Test", "TimeChecker.DAL.Test\TimeChecker.DAL.Test.csproj", "{9270D65B-4DC8-4D3B-903D-941380C37BE5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeCheckerWPF5.0", "TimeCheckerWPF5.0\TimeCheckerWPF5.0.csproj", "{28145794-002F-450E-9F30-F134142404F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeCheckerWPF5_0", "TimeCheckerWPF5.0\TimeCheckerWPF5_0.csproj", "{28145794-002F-450E-9F30-F134142404F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

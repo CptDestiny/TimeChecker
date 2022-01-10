@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace TimeCheckerWPF5._0.Views
+namespace TimeCheckerWPF5_0.Views
 {
     /// <summary>
     /// Interaction logic for LogInView.xaml
