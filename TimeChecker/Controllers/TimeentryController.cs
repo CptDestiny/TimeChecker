@@ -6,6 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using TimeChecker.DAL.Data;
 using TimeChecker.DAL.Models;
+using System.IO;
+
 
 namespace TimeChecker.Controllers
 {
@@ -15,6 +17,9 @@ namespace TimeChecker.Controllers
         // Variable für Datenbankinhalt
         private readonly ApplicationDbContext _context;
 
+        const string pathtxt = @"C:\temp\Timeentry_Data.txt";
+
+
         // Dependency injection Übergabe des Datenbankinhalts
         public TimeentryController(ApplicationDbContext context)
         {
@@ -23,14 +28,15 @@ namespace TimeChecker.Controllers
 
         public IActionResult Index()
         {
+
             // Datenbankinhalt Timeentry in Variable employees speichern
             var timeentry = _context.Timeentry.ToList();
-
+        
             // Variable timeentry in ViewBag übergeben
-            ViewBag.Timeentry = timeentry;
-
-            // ViewBag wird übergeben
-            return View();
+             ViewBag.Timeentry = timeentry;
+            
+             // ViewBag wird übergeben
+             return View();            
         }
 
         // Bestehender Timeentry aus Datenbank bearbeiten
@@ -78,6 +84,7 @@ namespace TimeChecker.Controllers
             if (timeentryInDb == null)
             {
                 return NotFound();
+                
             }
 
             _context.Timeentry.Remove(timeentryInDb);
@@ -86,6 +93,88 @@ namespace TimeChecker.Controllers
 
             return RedirectToAction("Index");
 
+        }
+
+        // Timeentry Daten in Textdatei exportieren
+        public IActionResult Export()
+        {
+            var timeentryinDB = _context.Timeentry.ToList();
+
+            SaveWithStream(pathtxt, timeentryinDB);
+
+            return RedirectToAction("Index");
+        }
+
+        // Textdatei via stream speichern
+        private static void SaveWithStream(string path, List<Timeentry> timeentryinDB)
+        {
+            var convertString = "";
+            var commentString = "";
+
+            using (var fs = new FileStream(path, FileMode.Create, FileAccess.Write))
+            using (TextWriter writer = new StreamWriter(fs))
+            {
+            
+                foreach (var timeentry in timeentryinDB)
+                {
+
+                        switch (timeentry.Type)
+                        {
+                            case 1:
+                            convertString = timeentry.Type.ToString("Check In");
+                            break;
+                            
+                            case 2:
+                            convertString = timeentry.Type.ToString("Check Out");
+                            break;
+
+                            case 3:
+                            convertString = timeentry.Type.ToString("Start Break");
+                            break;
+
+                            case 4:
+                            convertString = timeentry.Type.ToString("Stop Break");
+                            break;
+
+                            default: 
+                            break;
+
+                        }
+
+                        switch (timeentry.Type)
+                    {
+                        case 1:
+                            commentString = "Leer";
+                            break;
+
+                        case 2:
+                            commentString = timeentry.Comment;
+                            break;
+
+                        case 3:
+                            commentString = "Leer";
+                            break;
+
+                        case 4:
+                            commentString = "Leer";
+                            break;
+
+                        default:
+                            break;
+
+                    }
+
+
+                    writer.WriteLine(convertString);
+                    writer.WriteLine(timeentry.DateTime);
+                    writer.WriteLine(commentString);
+                    writer.WriteLine(timeentry.User);
+                    writer.WriteLine();
+                }
+
+                 
+                
+            }
         }
     }
 }
