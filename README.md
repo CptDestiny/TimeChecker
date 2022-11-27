@@ -53,7 +53,7 @@ can be used.
 
 
 
-## TimeChecker Desktop and Webapp:
+## TimeChecker Desktop and Webapp
 
 ![solution1](https://user-images.githubusercontent.com/93710089/204139536-c13de197-f2ac-4a4c-baa1-694cec1b3dde.JPG)
 
@@ -69,17 +69,17 @@ can be used.
 
 ![Desktop Login](https://user-images.githubusercontent.com/93710089/204139574-cd85b434-04ea-498b-a8cb-6fbd0bc101a4.JPG)
 
-## Desktop Time Checker Checkin, Start Break, Stop Break, Check Out:
+## Desktop Time Checker Checkin, Start Break, Stop Break, Check Out
 
 ![Desktop Checked](https://user-images.githubusercontent.com/93710089/204139605-dbb37046-4984-423c-b64e-36a7e2eb47eb.JPG)
 
 ![Checkout](https://user-images.githubusercontent.com/93710089/204139599-658188af-a01d-446e-a841-d3fc333d0568.JPG)
 
-## Desktop Time Checker, Check the times:
+## Desktop Time Checker, elapsed times overview
 
 ![Esalpsed Times](https://user-images.githubusercontent.com/93710089/204139629-5f461506-df86-4e37-94a9-46afbd914c83.JPG)
 
-## Desktop Time Checker, Login & Process with other User:
+## Desktop Time Checker, login and process with other user
 
 ![Second Login](https://user-images.githubusercontent.com/93710089/204139646-fd550255-27a1-414f-97f5-26a984ca87ee.JPG)
 
