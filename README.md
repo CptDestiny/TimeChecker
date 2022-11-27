@@ -5,6 +5,10 @@ TimeChecker app with .NET WPF and ASP.NET to track and save time spendings. Desk
 
 
 ## How to start
+
+**Important**: Clone the "Dev_Test" branch - had problems between this branch and master I need to fix!! Sorry for inconvenience
+**Start Up Projects**: TimeChecker & TimeCheckerWpf5.0
+
 To be able to use the TimeChecker Solution, the following steps have to be taken during the first use
 must be done during the first use:
 
@@ -45,6 +49,44 @@ must be created
 
 As soon as at least one employee exists in the database, the TimeChecker WPF app can be used.
 can be used.
+
+
+
+
+## TimeChecker Desktop and Webapp:
+
+![solution1](https://user-images.githubusercontent.com/93710089/204139536-c13de197-f2ac-4a4c-baa1-694cec1b3dde.JPG)
+
+## Web App Employees
+
+![web_employees](https://user-images.githubusercontent.com/93710089/204139548-e50af0ac-7ab8-43ed-8a7e-5e244ede0f28.JPG)
+
+## Web App Admin
+
+![web_admin](https://user-images.githubusercontent.com/93710089/204139559-2d94d548-0ecd-471b-be58-93ef798a9992.JPG)
+
+## Desktop Time Checker Login
+
+![Desktop Login](https://user-images.githubusercontent.com/93710089/204139574-cd85b434-04ea-498b-a8cb-6fbd0bc101a4.JPG)
+
+## Desktop Time Checker Checkin, Start Break, Stop Break, Check Out:
+
+![Desktop Checked](https://user-images.githubusercontent.com/93710089/204139605-dbb37046-4984-423c-b64e-36a7e2eb47eb.JPG)
+
+![Checkout](https://user-images.githubusercontent.com/93710089/204139599-658188af-a01d-446e-a841-d3fc333d0568.JPG)
+
+## Desktop Time Checker, Check the times:
+
+![Esalpsed Times](https://user-images.githubusercontent.com/93710089/204139629-5f461506-df86-4e37-94a9-46afbd914c83.JPG)
+
+## Desktop Time Checker, Login & Process with other User:
+
+![Second Login](https://user-images.githubusercontent.com/93710089/204139646-fd550255-27a1-414f-97f5-26a984ca87ee.JPG)
+
+![Other User Data](https://user-images.githubusercontent.com/93710089/204139655-ff6f7fc9-b9da-4c80-aaee-ed716c04c966.JPG)
+
+![OtherUserElapsedTimes](https://user-images.githubusercontent.com/93710089/204139663-7852b614-7d3c-459e-9d7c-668b6275a0ab.JPG)
+
 
 
 ## Team
