@@ -50,5 +50,5 @@ can be used.
 ## Team
 A big shout out to my teammate:
 <ul>
-<li>Jose Panov https://www.linkedin.com/in/jose-panov-227727216//</li>
+<li>Jose Panov https://www.linkedin.com/in/jose-panov-227727216/</li>
 </ul>
