@@ -13,9 +13,11 @@ In order for records to be written to the database, it must be created.
 Enter the following commands in the Package Manager Console:
 
 1.1 Add-migrations (your name)
+
 ![setUp1](https://user-images.githubusercontent.com/93710089/204137935-d0638113-b422-46c8-8242-aabb4c9bff2f.JPG)
 
 1.2 update-database
+
 ![setUp2](https://user-images.githubusercontent.com/93710089/204137940-647a07ee-1553-4b58-9a00-a7faa5e6216a.JPG)
 
 The following tables must now be present: "Employees" and "Timeentry".
@@ -28,6 +30,7 @@ and delete them.
 Credentials for an Admin:
 Email: admin@bluewin.ch
 Passwort: Test1.
+
 ![setUp3](https://user-images.githubusercontent.com/93710089/204137977-987398b6-921d-4a48-b642-b407b813e129.JPG)
 
 Create a TimeChecker WPF app user:
@@ -37,6 +40,7 @@ can be used for the first time, a user must first be created via the WebApp.
 must be created
 3.1 Start WebApp, open "Employee" view
 3.2 Use "+Create Employee" to create a new employee.
+
 ![image](https://user-images.githubusercontent.com/93710089/204138004-880881e4-be5e-479b-b42e-34d4d4f45cfb.png)
 
 As soon as at least one employee exists in the database, the TimeChecker WPF app can be used.
