@@ -1,7 +1,7 @@
 # Final Project CAS in Objectoriented Programming
 
 
-TimeChecker app with .NET WPF and ASP.NET to track and save time spendings. Desktop UI with WPF, SQLite Database for Testing and ASP.NET Frontend for managing database data saved through the desktop app.
+TimeChecker app with .NET WPF and ASP.NET to track and manage times spend on doing something (Stopwatch principle). Desktop UI with WPF, SQLite Database for Testing and ASP.NET Frontend for managing database data stored with the desktop app.
 
 
 ## How to start
